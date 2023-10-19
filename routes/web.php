@@ -65,7 +65,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/account-types/{accountType}', 'AccountTypeController@destroy')->name('account-types.destroy');
 });
 
+// Search
+Route::get('/search', 'SearchController@search')->name('search');
+
+
+// Menampilkan formulir pembaruan profile
 Route::get('/profile/edit', 'ProfileController@edit')->name('profile.edit');
+
+// Menyimpan pembaruan profile
 Route::put('/profile/update', 'ProfileController@update')->name('profile.update');
+
 Route::resource('jenis-accounts', AccountTypeController::class);
 Route::resource('users', UserController::class);

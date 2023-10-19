@@ -7,11 +7,16 @@ use App\AccountType;
 
 class AccountTypeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $accountTypes = AccountType::all();
+        $sortField = $request->input('sort', 'name'); // Kolom yang akan digunakan untuk penguruta nama
+        $sortDirection = $request->input('direction', 'asc'); // Arah pengurutan, misalnya 'asc' (A-Z) atau 'desc' (Z-A)
+    
+        $accountTypes = AccountType::orderBy($sortField, $sortDirection)->get();
+    
         return view('auth.jenis-accounts.index', compact('accountTypes'));
     }
+    
 
     public function create()
     {

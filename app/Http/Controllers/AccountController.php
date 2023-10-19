@@ -13,11 +13,15 @@ class AccountController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $accounts = Account::all();
+        $sortField = $request->input('sort', 'name');
+        $sortDirection = $request->input('direction', 'asc');
+
+        $accounts = Account::orderBy($sortField, $sortDirection)->get();
         return view('auth.accounts.index', compact('accounts'));
     }
+
 
     public function create()
     {
