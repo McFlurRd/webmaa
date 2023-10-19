@@ -60,7 +60,7 @@ class AccountController extends Controller
         $accountTypes = AccountType::all(); // Mengambil semua jenis akun
         return view('auth.accounts.edit', compact('account', 'accountTypes'));
     }
-    
+
 
     public function update(Request $request, Account $account)
     {
@@ -68,18 +68,24 @@ class AccountController extends Controller
             'name' => 'required|string|max:255',
             'username' => 'string|max:255|nullable',
             'email' => 'email|max:255|nullable',
-            'password' => 'required|string',
             'url' => 'string|nullable',
             'keterangan' => 'string|nullable',
             'jenis_account_id' => 'integer',
         ]);
+
+        // Periksa apakah ada kata sandi baru yang diinputkan
+        if ($request->filled('new_password')) {
+            $newPassword = bcrypt($request->input('new_password'));
+        } else {
+            $newPassword = $account->password; // Gunakan kata sandi yang sudah ada
+        }
 
         // Update the attributes of the existing $account model.
         $account->update([
             'name' => $request->input('name'),
             'username' => $request->input('username'),
             'email' => $request->input('email'),
-            'password' => bcrypt($request->input('password')),
+            'password' => $newPassword,
             'url' => $request->input('url'),
             'keterangan' => $request->input('keterangan'),
             'jenis_account_id' => $request->input('jenis_account_id'),
