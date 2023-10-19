@@ -23,6 +23,10 @@
             <input type="email" name="email" id="email" class="form-control" value="{{ $account->email }}" required>
         </div>
         <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" class="form-control" value="{{ $account->password }}" required>
+        </div>
+        <div class="form-group">
             <label for="url">URL</label>
             <input type="text" name="url" id="url" class="form-control" value="{{ $account->url }}">
         </div>
@@ -41,6 +45,7 @@
                 @endforeach
             </select>
         </div>
+        
         <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
     </form>
 </div>

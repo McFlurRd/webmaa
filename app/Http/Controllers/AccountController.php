@@ -33,7 +33,7 @@ class AccountController extends Controller
             'name' => 'required|string|max:255',
             'username' => 'string|max:255|nullable',
             'email' => 'email|max:255|nullable',
-            'password' => 'required|string|min:8',
+            'password' => 'required|string',
             'url' => 'string|nullable',
             'keterangan' => 'string|nullable',
             'jenis_account_id' => 'integer',
@@ -57,25 +57,24 @@ class AccountController extends Controller
 
     public function edit(Account $account)
     {
-        $accountTypes = AccountType::all();
+        $accountTypes = AccountType::all(); // Mengambil semua jenis akun
         return view('auth.accounts.edit', compact('account', 'accountTypes'));
     }
+    
 
     public function update(Request $request, Account $account)
     {
-
         $request->validate([
             'name' => 'required|string|max:255',
             'username' => 'string|max:255|nullable',
             'email' => 'email|max:255|nullable',
-            'password' => 'required|string|min:8',
+            'password' => 'required|string',
             'url' => 'string|nullable',
             'keterangan' => 'string|nullable',
             'jenis_account_id' => 'integer',
         ]);
 
         // Update the attributes of the existing $account model.
-
         $account->update([
             'name' => $request->input('name'),
             'username' => $request->input('username'),
@@ -85,6 +84,7 @@ class AccountController extends Controller
             'keterangan' => $request->input('keterangan'),
             'jenis_account_id' => $request->input('jenis_account_id'),
         ]);
+
 
         // Save the changes to the database.
         return redirect()->route('accounts.index')->with('success', 'Data akun berhasil diperbarui.');
